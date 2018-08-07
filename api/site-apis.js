@@ -1,5 +1,6 @@
 import { Website } from '../api/schema';
 import siteDetails from '../constants/page-content';
+import { dotify } from '../utils';
 
 const siteApis = (server) => {
 
@@ -40,11 +41,11 @@ const siteApis = (server) => {
 
   server.put('/api/edit', (req, res) => {
     const body = req.body;
-    Website.findOneAndUpdate({ route: body.id }, body.data)
-      .then(() => Website.find())
-      .then((data) => {
-        res.status(200).send(data);
-      })
+    const { __v, _id, ...payload } = body.data;
+
+    Website.findOneAndUpdate({ route: body.id }, dotify(payload))
+      .then(() => Website.find({ route: body.id }))
+      .then(data => res.status(200).send(data[0]))
   })
 
   return server
