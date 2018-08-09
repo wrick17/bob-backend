@@ -1,5 +1,4 @@
 import { Website } from '../api/schema';
-import siteDetails from '../constants/page-content';
 import { dotify } from '../utils';
 
 const siteApis = (server) => {
@@ -22,7 +21,7 @@ const siteApis = (server) => {
 
   server.post('/api/create', (req, res) => {
     const body = req.body;
-    const website = new Website({ ...body, active: true, ...siteDetails });
+    const website = new Website({ ...body, active: true });
     website.save()
       .then(() => Website.find())
       .then((data) => {

@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 export const Websites = new Schema({
   name: String,
   route: String,
+  eventId: String,
   active: Boolean,
   content: Schema.Types.Mixed,
 });
